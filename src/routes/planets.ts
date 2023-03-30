@@ -15,12 +15,6 @@ const upload = initMulterMiddleware();
 
 const router = Router();
 
-router.get('/', async (req, res) => {
-    const planets = await prisma.planet.findMany();
-
-    res.json(planets)
-})
-
 router.get('/:id(\\d+)', async (req, res, next) => {
     const planetId: number = Number(req.params.id);
 

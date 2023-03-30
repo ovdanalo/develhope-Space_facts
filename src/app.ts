@@ -12,7 +12,7 @@ import {
 
 import planetsRoutes from './routes/planets';
 import authRoutes from './routes/auth';
-
+import prisma from '../lib/prisma/client';
 
 const app = express();
 
@@ -25,6 +25,12 @@ app.use(passport.session());
 app.use(express.json());
 
 app.use(initCorsMiddleware())
+
+app.get('/', async (req, res) => {
+    const planets = await prisma.planet.findMany();
+
+    res.json(planets)
+})
 
 app.use('/planets', planetsRoutes)
 app.use("/auth", authRoutes)

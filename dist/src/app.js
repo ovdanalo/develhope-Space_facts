@@ -12,12 +12,17 @@ const passport_1 = require("../lib/middleware/passport");
 const error_1 = require("../lib/middleware/error");
 const planets_1 = __importDefault(require("./routes/planets"));
 const auth_1 = __importDefault(require("./routes/auth"));
+const client_1 = __importDefault(require("../lib/prisma/client"));
 const app = (0, express_1.default)();
 app.use((0, session_1.initSessionMiddleware)(app.get("env")));
 app.use(passport_1.passport.initialize());
 app.use(passport_1.passport.session());
 app.use(express_1.default.json());
 app.use((0, cors_1.initCorsMiddleware)());
+app.get('/', async (req, res) => {
+    const planets = await client_1.default.planet.findMany();
+    res.json(planets);
+});
 app.use('/planets', planets_1.default);
 app.use("/auth", auth_1.default);
 app.use(error_1.notFoundMiddleware);
