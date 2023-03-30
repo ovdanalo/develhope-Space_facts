@@ -1,4 +1,4 @@
-import { STATUS_CODES } from 'node:http';
+import { STATUS_CODES } from 'http';
 import { Response, RequestHandler, ErrorRequestHandler} from 'express';
 
 interface HttpError extends Error {
