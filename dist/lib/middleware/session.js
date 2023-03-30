@@ -6,11 +6,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.initSessionMiddleware = void 0;
 const express_session_1 = __importDefault(require("express-session"));
 const config_1 = __importDefault(require("../../src/config"));
-function initSessionMiddleware() {
+function initSessionMiddleware(appEnvironment) {
+    const isProduction = appEnvironment === "production";
     return (0, express_session_1.default)({
         secret: config_1.default.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
+        cookie: {
+            secure: isProduction,
+        },
+        proxy: isProduction,
     });
 }
 exports.initSessionMiddleware = initSessionMiddleware;
